@@ -2,12 +2,15 @@ package com.bplow.todo.sample.action;
 
 import java.util.List;
 
+import javax.servlet.ServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bplow.look.bass.paging.Page;
 import com.bplow.todo.sample.dmo.User;
 import com.bplow.todo.sample.sevice.UserService;
 
@@ -22,6 +25,8 @@ import com.bplow.todo.sample.sevice.UserService;
 @Controller
 public class UserAction {
 	
+	private int pageSize = 3;
+	
 	@Autowired
 	UserService userService;
 	
@@ -34,11 +39,12 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping("/showlist")
-	public String showUserPage(User user,ModelMap modelMap){
-		
-		List<User> userlist = userService.queryUserList(user);
+	public String showUserPage(User user,Page page,ModelMap modelMap,ServletRequest request){
+		List<User> userlist = userService.queryUserList(user,page);
 		
 		modelMap.addAttribute("userlist", userlist);
+		modelMap.put("page", page);
+		request.setAttribute("page", page);
 		return "user/list";
 	}
 	
@@ -52,13 +58,13 @@ public class UserAction {
 	 * @return
 	 */
 	@RequestMapping("/add")
-	public String addUser(User user,ModelMap modelMap){
+	public String addUser(User user,ModelMap modelMap,ServletRequest request){
 		/*user.setUserid("wangxioalei");
 		user.setUserName("");
 		user.setUserpsw("");*/
 		userService.addUser(user);
 		user.setUserid(null);
-		return showUserPage(user,modelMap);
+		return showUserPage(user,new Page(),modelMap,request);
 	}
 	
 	/**
@@ -82,11 +88,11 @@ public class UserAction {
 	 * 修改用户
 	 */
 	@RequestMapping("/update")
-	public String updateUser(User user,ModelMap modelMap){
+	public String updateUser(User user,ModelMap modelMap,ServletRequest request){
 		
         userService.updateUser(user);
 		
-		return showUserPage(user,modelMap);
+		return showUserPage(user,new Page(),modelMap,request);
 	}
 	
 	
@@ -95,11 +101,11 @@ public class UserAction {
 	 * 删除用户
 	 */
 	@RequestMapping("/del")
-	public String delUser(User user,ModelMap modelMap){
+	public String delUser(User user,ModelMap modelMap,ServletRequest request){
 		
 		userService.delUser(user);
 		
-		return showUserPage(user,modelMap);
+		return showUserPage(user,new Page(),modelMap,request);
 	}
 
 }

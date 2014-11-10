@@ -1,7 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -35,11 +31,11 @@
 <table class="table table-bordered table-striped">
 <thead><th>用户名</th><th>用户id</th><th>用户密码</th><th>操作</th></<thead>
 <tbody>
-<c:forEach var="user" items="${userlist}">
+<#list userlist as user>
 <tr>
 <td>${user.userName }</td><td>${user.userid }</td><td>${user.userpsw }</td><td><a onclick="deluser('${user.id}')" >删除</a>   修改</td>
 </tr>
-</c:forEach>
+</#list>
 </tbody>
 </table>
 <div class="pagination pagination-centered">
@@ -52,6 +48,15 @@
     <li class="active"><a href="#">5</a></li>
     <li class="active"><a href="#">Next</a></li>
   </ul>
+</div>
+
+
+<div class="pagination pagination-centered">
+  <ul>
+            <#import "../pageftl/pagination.ftl" as com>  
+            <#--前一个参数是总记录数，后一个参数是页面记录数-->  
+            <@com.pagination page.totalRecord page.pageSize page />
+</ul>
 </div>
 
 <script type="text/javascript">

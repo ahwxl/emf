@@ -1,10 +1,13 @@
 package com.bplow.todo.sample.sevice;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bplow.look.bass.paging.Page;
 import com.bplow.todo.sample.dao.UserMapper;
 import com.bplow.todo.sample.dmo.User;
 
@@ -30,6 +33,13 @@ public class UserService {
 	 */
 	public List<User> queryUserList(User user){
 		return userDao.queryUserList(user);
+	}
+	
+	public List<User> queryUserList(User user,Page page){
+		Map map = new HashMap();
+		map.put("user_id",user.getUserid());
+		map.put("page", page);
+		return userDao.queryUserForPage(map);
 	}
 	
 	/**

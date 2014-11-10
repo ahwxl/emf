@@ -1,7 +1,9 @@
 package com.bplow.todo.sample.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import com.bplow.look.bass.paging.Page;
 import com.bplow.todo.sample.dmo.User;
 
 public interface UserMapper {
@@ -27,6 +29,6 @@ public interface UserMapper {
 	 * @param user
 	 * @return
 	 */
-	List<User> queryUserForPage(User user);
+	List<User> queryUserForPage(Map map);
 
 }

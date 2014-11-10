@@ -36,6 +36,23 @@
       and a.id = #{id}
     </if>
   </select>
+  
+  <select id="queryUserForPage" resultType="User" parameterType="hashmap">
+    SELECT
+      id,
+      user_id as userid,
+      user_name as userName,
+      user_password AS userpsw
+    FROM USER a
+    where 1=1
+    <if test="userid != null">
+      and  a.user_id = #{userid}
+    </if>
+    <if test="id != null and id !=0">
+      and a.id = #{id}
+    </if>
+  </select>
+  
 
   <insert id="addUser" parameterType="User">
     INSERT INTO USER
