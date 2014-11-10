@@ -72,7 +72,7 @@ function doSubmitByAjax(){
 
 $(document).ready(function(){
 	$('a.listBtn').click(function(){
-		       window.location.href="/springmvc/showlist";//showlist
+		       window.location.href="showlist";//showlist
 	         }
 	);
 	
