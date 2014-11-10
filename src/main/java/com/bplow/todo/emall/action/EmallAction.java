@@ -24,7 +24,7 @@ public class EmallAction {
 		
 		
 		
-		return "emall/product_view";
+		return "emall/product_viewinfo";
 	}
 
 	@RequestMapping("/cashier")
