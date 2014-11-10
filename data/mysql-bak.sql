@@ -241,3 +241,13 @@ INSERT INTO `user` (`id`, `user_id`, `user_name`, `user_password`) VALUES
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 /*!40014 SET FOREIGN_KEY_CHECKS=1 */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+CREATE TABLE `chartdata` (
+	`series_A` VARCHAR(50) NULL DEFAULT NULL,
+	`series_date` TIMESTAMP NULL DEFAULT NULL,
+	`data_value` BIGINT(20) NULL DEFAULT NULL,
+	`id` VARCHAR(50) NULL DEFAULT NULL
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
