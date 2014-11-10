@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd"
+	default-lazy-init="true">
+
+	<description>Quartz的本地Cron式执行任务配置</description>
+
+	<!-- Quartz集群Schduler -->
+	<bean id="clusterQuartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- Triggers集成 -->
+		<property name="triggers">
+			<list>
+				<!--  <ref bean="timerTrigger" />-->
+			</list>
+		</property>
+		<!--  quartz配置文件路径, 指向cluster配置 -->
+		<property name="configLocation" value="classpath:quartz-cluster.properties" />
+		<!-- 启动时延期2秒开始任务 -->
+		<property name="startupDelay" value="2" />
+		<!-- 保存Job数据到数据库所需的数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- Job接受applicationContext的成员变量名 -->
+		<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+	</bean>
+
+    <!-- 周一至五,朝九晚五工作时间内每半小时执行一次 -->
+	<!-- Cron式Trigger定义 
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="cronJobDetail" />
+		
+		<property name="cronExpression" value="0 0/30 9-17 ? * MON-FRI" />
+	</bean>-->
+
+	<!-- JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean 
+	<bean id="cronJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="userCountScanner" />
+		<property name="targetMethod" value="executeByQuartzLocalJob" />
+		同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. 
+		<property name="concurrent" value="true" />
+	</bean>-->
+	
+	<!-- Job的可配置属性,在job中通过applicationContext动态获取 -->
+	<util:map id="timerJobConfig">
+		<entry key="nodeName" value="${server.node_name}" />
+	</util:map>
+
+
+</beans>
