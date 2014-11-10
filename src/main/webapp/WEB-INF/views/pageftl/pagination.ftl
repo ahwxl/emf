@@ -26,7 +26,7 @@
      </#if>  
     <#-- 显示当前页附近的页-->  
     <#assign end=pageIndex+4>  
-    <#if (end>pageCount)>  
+    <#if (end>pageCount)>
         <#assign end=pageCount>  
     </#if>  
     <#list start..end as index>  
