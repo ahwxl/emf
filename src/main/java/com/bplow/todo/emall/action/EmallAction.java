@@ -16,7 +16,7 @@ public class EmallAction {
 	public String showMain(){
 		
 		
-		return "emall/index";
+		return "emall/main";
 	}
 	@RequestMapping("/showproduct")
 	public String showProduct() {
@@ -30,7 +30,7 @@ public class EmallAction {
 	@RequestMapping("/cashier")
 	public String showCashier() {
 
-		return "";
+		return "emall/cashier";
 	}
 	
 	public String show() {
